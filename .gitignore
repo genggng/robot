@@ -1,1 +1,5 @@
+**/*.pyc
+/modules/__pycache__
 /mcl
+*.ipynb
+*.json

@@ -3,12 +3,12 @@
 
 # 安装配置
 ## 安装必要的依赖包
-1. 安装jdk>11
+1. 安装jdk>=11
 
 ```shell
 sudo apt install openjdk-11-jdk
 ```
-2. 安装Mirai Console Loader用于安装mirai-api-http
+2. 安装Mirai Console Loader(用于安装mirai-api-http插件和启动服务)
 ```shell
 mkdir mcl
 cd mcl
@@ -42,7 +42,7 @@ pip install redis
 
 
 ## 配置mirai-api-http运行信息
-编辑./mcl/config/net.mamoe.mirai-api-http/setting.yml配置文件 (没有则自行创建)
+编辑./mcl/config/net.mamoe.mirai-api-http/setting.yml配置文件 (没有则自行创建，直接复制如下即可)
 ```yml
 ## 启用的 adapter, 内置有 http, ws, reverse-ws, webhook
 adapters:
@@ -112,7 +112,7 @@ accounts:
 执行`./mcl`启动终端服务，此时会自动登录你的QQ。  
 如果不出意外的话，出现`Event: BotOnlineEvent(bot=Bot(<你的QQ号>))` 信息。  
 那么恭喜你, 你的QQ机器人已经调教好了，请享用。  
-但是，如果出现弹窗，请参考这个教程[`3.登录QQ`](https://graia.readthedocs.io/ariadne/appendix/mah-install/)部分解决。
+但是，如果出现弹窗，说明你的账号需要手机号验证，请参考这个教程[`3.登录QQ`](https://graia.readthedocs.io/ariadne/appendix/mah-install/)解决。
 
 # 如何使用
 1. `启动redis服务`(如果设置服务自启动，请忽略)  
@@ -122,7 +122,7 @@ accounts:
     ```
     如果出现`Could not connect to Redis at 127.0.0.1:6379: Connection refused`，证明没开启redis服务，使用下面的程序开启服务
     ```shell
-    redis-server &
+    redis-server /etc/redis/redis.conf &
     ```
 2. 启动`mirai-api-http`
     ```shell

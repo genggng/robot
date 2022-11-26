@@ -1,5 +1,8 @@
 import requests
 import json
+import base64
+from PIL import Image
+import io
 
 
 
@@ -15,6 +18,48 @@ def send_wx(msg,device=None):
     }
     
     return requests.post(webhook, data=json.dumps(data), headers=headers)
+def is_number(s):
+    try:
+        float(s)
+    except ValueError:
+        return False
+    else:
+        return True
+    
+
+def txt2img(prompt="",negative_prompt="",cfg_scale=7,steps=30,resByte=True):
+    if not prompt:
+        prompt = "((masterpiece)),(((best quality))),((ultra-detailed)),((illustration)), ((disheveled hair))"
+    if not negative_prompt:
+        negative_prompt = "longbody, lowres, bad anatomy, bad hands, missing fingers, pubic hair,extra digit, fewer digits, cropped, worst quality, low quality"
+
+    if not is_number(cfg_scale) or not is_number(steps):  #非法的参数
+        return {"status_code":999,"image":None,"parameters":None}
+
+    sampler_index="Euler a"
+    data = {
+        "prompt":prompt,
+        "negative_prompt":negative_prompt,
+        "sampler_index":sampler_index,
+        "cfg_scale":cfg_scale,
+        "steps":steps
+    }
+    url = "http://10.128.230.6:7860/sdapi/v1/txt2img"
+    r = requests.post(url,data=json.dumps(data))
+    if r.status_code <400:
+        data = json.loads(r.content.decode("utf-8"))
+        img_base64 = data["images"][0]
+        parameters = data["parameters"]
+        img_b64decode = base64.b64decode(img_base64)
+        image_io = io.BytesIO(img_b64decode)
+        if not resByte:
+            img = Image.open(image_io)
+        else:
+            img =  image_io.getvalue() 
+    else:
+        img = None
+        parameters = None
+    return {"status_code":r.status_code,"image":img,"parameters":parameters}
 
 def query_epidemic():
     # 查询新冠疫情
@@ -72,4 +117,5 @@ def wyy_words():
 # print(famous_words())
 # print(emotion_words())
 # print(wyy_words())
+# print(txt2img())
 
