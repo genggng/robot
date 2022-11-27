@@ -33,6 +33,8 @@ def txt2img(prompt="",negative_prompt="",cfg_scale=7,steps=30,resByte=True):
     if not negative_prompt:
         negative_prompt = "longbody, lowres, bad anatomy, bad hands, missing fingers, pubic hair,extra digit, fewer digits, cropped, worst quality, low quality"
 
+    prompt = prompt.replace("{","(").replace("}",")")
+    negative_prompt = negative_prompt.replace("{","(").replace("}",")")
     if not is_number(cfg_scale) or not is_number(steps):  #非法的参数
         return {"status_code":999,"image":None,"parameters":None}
 
