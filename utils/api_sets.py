@@ -1,9 +1,12 @@
+import sys
+sys.path.append("/home/geng/robot")
+
 import requests
 import json
 import base64
 from PIL import Image
 import io
-
+from cfg import PC_IP
 
 
 def send_wx(msg,device=None):
@@ -46,7 +49,7 @@ def txt2img(prompt="",negative_prompt="",cfg_scale=7,steps=30,resByte=True):
         "cfg_scale":cfg_scale,
         "steps":steps
     }
-    url = "http://10.128.230.6:7860/sdapi/v1/txt2img"
+    url = f"http://{PC_IP}:7860/sdapi/v1/txt2img"
     r = requests.post(url,data=json.dumps(data))
     if r.status_code <400:
         data = json.loads(r.content.decode("utf-8"))

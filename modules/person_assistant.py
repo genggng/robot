@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/home/geng/robot/utils") #加入工具链
+sys.path.append("/home/geng/robot/") #加入工具链
 
 import random
 import time
@@ -8,7 +8,7 @@ from graia.ariadne.event.message import FriendMessage
 from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.model import Friend
 from graia.ariadne.message.element import Image as botImage
-
+from cfg import admin_id,guest_id,random_reply
 
 from graia.saya import Channel
 from graia.saya.builtins.broadcast.schema import ListenerSchema
@@ -17,9 +17,6 @@ from utils import *
 
 
 db = Know_DB() #知识库
-
-channel = Channel.current()
-
 key_api = {
    "网易云":wyy_words,
    "谈感情":emotion_words,
@@ -38,23 +35,17 @@ key_system = {
    "主机IP":extract_ip
 }
 
-admin_id = 1536967497
-host_id = {1536967497,1975597445}  #主人的qq号
+
+channel = Channel.current()
 
 guest_feature = "\n".join(list(key_api.keys())+list(advance_feature.keys()))
-admin_feature = "\n".join(list(key_api.keys())+list(advance_feature.keys()))
+admin_feature = "\n".join(list(key_api.keys())+list(advance_feature.keys())+list(key_system.keys()))
 
-random_reply = [
-   "小猫听不懂哦~",
-   "这个真不知道啦！",
-   "我最近学会了新本领，要不然看看我会啥。问我 技能 ",
-   "呵呵，你还挺可爱的（傻萌",
-   "老子不听你的啦"
-]
+
 
 @channel.use(ListenerSchema(listening_events=[FriendMessage]))
 async def setu(app: Ariadne, friend: Friend, message: MessageChain):
-   if friend.id in host_id:  #是主人提供服务   
+   if friend.id in guest_id:  #是主人提供服务   
       query = str(message)
       if query == "技能":   #展示技能
          reply = admin_feature if friend.id == admin_id else guest_feature
