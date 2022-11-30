@@ -12,6 +12,7 @@ from graia.ariadne.message.chain import MessageChain
 from graia.ariadne.model import Group
 from graia.saya import Saya
 import time
+from cfg import robot_id
 
 # time.sleep(10)  #等待10秒钟，让mcl启动
 
@@ -19,7 +20,7 @@ import time
 saya = create(Saya)
 app = Ariadne(
     connection=config(
-        3529152539,  # 你的机器人的 qq 号
+        robot_id,  # 你的机器人的 qq 号
         "ServiceVerifyKey",  # 填入你的 mirai-api-http 配置中的 verifyKey
         # 以下两行（不含注释）里的 host 参数的地址
         # 是你的 mirai-api-http 地址中的地址与端口

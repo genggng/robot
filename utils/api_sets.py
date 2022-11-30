@@ -9,18 +9,6 @@ import io
 from cfg import PC_IP
 
 
-def send_wx(msg,device=None):
-    webhook = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=307d8ea5-2c7a-4346-833f-9e2c700e8b4b"
-    headers = {'content-type': 'application/json'}
-    device_info = f"\nThis msg is from {device}" if device else ""
-    data = {
-        "msgtype": "text",
-        "text": {
-                "content": f"{msg} {device_info}"
-            }
-    }
-    
-    return requests.post(webhook, data=json.dumps(data), headers=headers)
 def is_number(s):
     try:
         float(s)
