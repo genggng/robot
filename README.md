@@ -29,9 +29,9 @@ sudo apt intall redis-server
 ```
 
 5. 安装ariadne等python包  
-这里假设你使用conda管理python虚拟环境（python>3.8 建议==3.9）
+这里假设你使用conda管理python虚拟环境（python>3.8 建议==3.10）
 ```shell
-conda create -n bot python=3.9
+conda create -n bot python=3.10
 conda activate bot
 pip install graia-ariadne
 pip install graia-saya
